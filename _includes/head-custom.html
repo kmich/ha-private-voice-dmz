@@ -1,0 +1,17 @@
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+  window.addEventListener('DOMContentLoaded', async () => {
+    const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code.highlighter-rouge');
+    for (const block of codeBlocks) {
+      if (block.textContent.includes('flowchart') || block.textContent.includes('sequenceDiagram')) {
+        const pre = block.parentElement;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = block.textContent;
+        pre.parentNode.replaceChild(container, pre);
+      }
+    }
+    await mermaid.run();
+  });
+</script>

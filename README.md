@@ -78,6 +78,16 @@ flowchart TD
 
 ---
 
+## Prerequisites
+
+Before starting, ensure you have:
+- A Home Assistant instance accessible via public HTTPS with a valid SSL certificate (e.g. Cloudflare Tunnel, DuckDNS, NGINX SSL).
+- A standard Google account.
+- At least one Google Home Mini, Nest speaker, or the Google Home mobile app.
+- Node-RED (optional, only needed if you plan to dispatch complex automations from voice).
+
+---
+
 ## Phase 1: Google Cloud & Actions Console Setup
 
 You do **not** need a paid Nabu Casa subscription or a published public Google Action to achieve native integration. You will create a private, self-hosted developer action in Test mode.
