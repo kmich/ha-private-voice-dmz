@@ -11,4 +11,4 @@ kramdown:
   syntax_highlighter: rouge
 
 # Repository metadata
-repository: "your-username/ha-private-voice-dmz"
+repository: "kmich/ha-private-voice-dmz"
