@@ -114,7 +114,7 @@ Under **Advanced Options > Account Linking**:
 2. Click **Create Service Account** (Name: `home-assistant`).
 3. Assign the role: **Service Account Token Creator**.
 4. Click into the new service account > **Keys** > **Add Key** > **Create new key (JSON)**.
-5. Download the JSON file, rename it to `service_account.json`, and place it in your Home Assistant `/config/` directory.
+5. Download the JSON file, rename it to `service_account.json`, and place it in the same directory as your YAML package file (e.g. `/config/packages/`).
 
 ### Step 1.5: Enable HomeGraph API & App Branding Requirement
 1. In Google Cloud Console, go to **APIs & Services > Library** and search for **HomeGraph API**. Click **Enable**.
@@ -125,11 +125,24 @@ Under **Advanced Options > Account Linking**:
    - Upload any square **144x144 PNG image** as the Small Icon (Google requires this before allowing Test deployment).
 4. Click **Test > On device testing** to activate the simulator.
 
+### Step 1.6: Link Account in the Google Home Mobile App
+1. Open the **Google Home app** on your mobile phone.
+2. Tap **Devices > Add (+) > Works with Google**.
+3. Look for your action prefixed with `[test]` (e.g. `[test] HA Bridge`).
+4. Tap it and log in with your Home Assistant user credentials.
+5. Once authenticated, your whitelisted entities will appear instantly in the app.
+
 ---
 
 ## Phase 2: Home Assistant Hardened Package
 
-Add the following package to your Home Assistant setup (e.g., `/config/packages/google_assistant_dmz.yaml`):
+Ensure packages are enabled in your `configuration.yaml`:
+```yaml
+homeassistant:
+  packages: !include_dir_named packages
+```
+
+Then add the following package to `/config/packages/google_assistant_dmz.yaml` (with `service_account.json` in the same directory):
 
 ```yaml
 # ------------------------------------------------------------------------------

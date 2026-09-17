@@ -21,7 +21,7 @@ Follow these strict rules and steps:
 
 ### 2. Implementation Tasks
 1. Verify whether packages are enabled in my `configuration.yaml` (`homeassistant: packages: !include_dir_named packages`).
-2. Create a new package file at `/config/packages/google_assistant/google_assistant_dmz.yaml` using modern `template: - switch:` syntax and the `google_assistant:` integration block.
+2. Place `service_account.json` in the target package directory and create the package file at `/config/packages/google_assistant/google_assistant_dmz.yaml` using modern `template: - switch:` syntax and the `google_assistant:` integration block.
 3. Configure the whitelisted entities I specify, assigning appropriate `name:`, `room:`, and `aliases:`.
 4. Run `ha core check` to ensure zero syntax or schema errors before reloading.
 5. In Node-RED, configure an event listener node (`server-state-changed`) listening to the virtual switch, wired to a `call-service` node that turns the switch off immediately, and route the payload to the intended home automations.

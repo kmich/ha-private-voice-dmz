@@ -37,7 +37,7 @@ google_assistant:
   # GCP Project ID from Google Cloud Console
   project_id: my-voice-bridge-1234
 
-  # Service Account JSON key (place file in /config/service_account.json)
+  # Service Account JSON key (place file in the same folder as this package)
   service_account: !include service_account.json
 
   # Report state back to Google Home Graph when states change locally
