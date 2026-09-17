@@ -1,0 +1,121 @@
+[
+  {
+    "id": "voice_dmz_tab_01",
+    "type": "tab",
+    "label": "Voice DMZ Dispatcher",
+    "disabled": false,
+    "info": "Listens for voice commands triggered via virtual Home Assistant proxy switches, dispatches automations, and instantly resets the state (<150ms)."
+  },
+  {
+    "id": "node_voice_trigger_listener",
+    "type": "server-state-changed",
+    "z": "voice_dmz_tab_01",
+    "name": "Listen: Voice Trigger Event",
+    "server": "home_assistant_server_id",
+    "version": 5,
+    "outputs": 1,
+    "exposeAsEntityConfig": "",
+    "entityId": "switch.voice_trigger_event",
+    "entityIdType": "exact",
+    "outputInitially": false,
+    "stateType": "str",
+    "ifState": "on",
+    "ifStateType": "str",
+    "ifStateOperator": "is",
+    "outputOnlyOnStateChange": true,
+    "for": "0",
+    "forType": "num",
+    "forUnits": "milliseconds",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "outputProperties": [
+      {
+        "property": "payload",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "entityState"
+      },
+      {
+        "property": "data",
+        "propertyType": "msg",
+        "value": "",
+        "valueType": "eventData"
+      }
+    ],
+    "x": 180,
+    "y": 140,
+    "wires": [
+      [
+        "node_instant_auto_reset",
+        "node_action_dispatcher"
+      ]
+    ]
+  },
+  {
+    "id": "node_instant_auto_reset",
+    "type": "api-call-service",
+    "z": "voice_dmz_tab_01",
+    "name": "Auto-Reset: Switch to Off (<150ms)",
+    "server": "home_assistant_server_id",
+    "version": 5,
+    "debugenabled": false,
+    "domain": "switch",
+    "service": "turn_off",
+    "areaId": [],
+    "deviceId": [],
+    "entityId": [
+      "switch.voice_trigger_event"
+    ],
+    "data": "{}",
+    "dataType": "jsonata",
+    "mergeContext": "",
+    "mustacheAltTags": false,
+    "outputProperties": [],
+    "queue": "none",
+    "x": 510,
+    "y": 100,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "node_action_dispatcher",
+    "type": "function",
+    "z": "voice_dmz_tab_01",
+    "name": "Dispatch Complex Action",
+    "func": "// Voice Trigger Event received!\n// Place your custom multi-step orchestration logic here.\nnode.log(\"Voice DMZ Trigger received. Executing home automation sequence...\");\n\nmsg.payload = {\n    event: \"voice_command_executed\",\n    timestamp: new Date().toISOString(),\n    trigger: msg.data.entity_id\n};\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 480,
+    "y": 180,
+    "wires": [
+      [
+        "node_debug_log"
+      ]
+    ]
+  },
+  {
+    "id": "node_debug_log",
+    "type": "debug",
+    "z": "voice_dmz_tab_01",
+    "name": "Log Action Output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 730,
+    "y": 180,
+    "wires": []
+  }
+]

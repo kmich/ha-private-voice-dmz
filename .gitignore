@@ -1,0 +1,20 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets and Keys (Crucial: never commit real service account keys)
+service_account*.json
+*.pem
+*.key
+*.token
+
+# Node-RED local runtime / credentials
+node_modules/
+credentials.json
+.config.json
+
+# Home Assistant local test files
+secrets.yaml
+*.log
+.storage/

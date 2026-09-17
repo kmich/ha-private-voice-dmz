@@ -1,0 +1,86 @@
+# ==============================================================================
+# Smart Home Voice DMZ - Home Assistant Package Template
+# ==============================================================================
+# This package implements a zero-exposure voice architecture:
+# 1. Google Cloud is treated as an UNTRUSTED external network (DMZ).
+# 2. 'exposed_domains: []' prevents automatic exposure of any real home devices.
+# 3. Only explicitly curated entities and virtual proxy switches are exposed.
+# 4. Native aliases allow natural speech without creating Google Home routines.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Virtual Helper & Proxy Switch (Event Bus)
+# ------------------------------------------------------------------------------
+input_boolean:
+  voice_event_bus:
+    name: "Voice Event Bus"
+    icon: mdi:microphone-message
+
+template:
+  - switch:
+      - name: "Voice Trigger Event"
+        unique_id: voice_trigger_event_dmz
+        state: "{{ is_state('input_boolean.voice_event_bus', 'on') }}"
+        turn_on:
+          - action: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.voice_event_bus
+        turn_off:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.voice_event_bus
+
+# ------------------------------------------------------------------------------
+# 2. Google Assistant Integration (Hardened Whitelist)
+# ------------------------------------------------------------------------------
+google_assistant:
+  # GCP Project ID from Google Cloud Console
+  project_id: my-voice-bridge-1234
+
+  # Service Account JSON key (place file in /config/service_account.json)
+  service_account: !include service_account.json
+
+  # Report state back to Google Home Graph when states change locally
+  report_state: true
+
+  # STRICT MANDATORY ZERO-EXPOSURE:
+  # Leaving this as an empty list guarantees that NO internal devices,
+  # sensors, cameras, or switches are exposed automatically.
+  exposed_domains: []
+
+  # Explicit Entity Whitelist
+  # Only entities listed below will exist inside Google Assistant.
+  entity_config:
+    # --------------------------------------------------------------------------
+    # Example 1: Virtual Proxy Switch (Trigger for Node-RED / Complex Flows)
+    # --------------------------------------------------------------------------
+    switch.voice_trigger_event:
+      name: "Voice Trigger"
+      aliases:
+        - "voice trigger"
+        - "trigger event"
+      expose: true
+
+    # --------------------------------------------------------------------------
+    # Example 2: Real Light with Native Aliases & Room Assignment
+    # --------------------------------------------------------------------------
+    light.living_room_ambient_light:
+      name: "Living Room Light"
+      room: "Living Room"
+      aliases:
+        - "living room lights"
+        - "main lights"
+        - "ambient light"
+      expose: true
+
+    # --------------------------------------------------------------------------
+    # Example 3: Real Cover / Blind with Room-Aware Naming
+    # --------------------------------------------------------------------------
+    cover.living_room_blinds:
+      name: "Living Room Blinds"
+      room: "Living Room"
+      aliases:
+        - "roller blinds"
+        - "window blinds"
+        - "blinds"
+      expose: true

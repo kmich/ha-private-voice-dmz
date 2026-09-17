@@ -1,0 +1,14 @@
+# GitHub Pages Configuration
+title: "Smart Home Voice DMZ"
+description: "Zero-Exposure Google Assistant & Node-RED Architecture for Home Assistant"
+theme: jekyll-theme-cayman
+show_downloads: true
+
+# Markdown rendering settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Repository metadata
+repository: "your-username/ha-private-voice-dmz"
