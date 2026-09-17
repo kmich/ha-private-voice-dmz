@@ -6,7 +6,7 @@
 [![Privacy: Zero-Exposure](https://img.shields.io/badge/Privacy-Zero--Exposure-brightgreen)](#the-smart-home-dmz-architecture)
 [![Dual-Audience](https://img.shields.io/badge/Audience-Human%20%2B%20AI%20Agent-purple)](#for-ai-coding-assistants)
 
-A hardened, privacy-first blueprint for integrating **Google Assistant / Google Home Minis** with **Home Assistant** and **Node-RED**—without exposing your internal devices, cameras, alarms, or network topology to Google Cloud, and without requiring Nabu Casa or manual Google Home routines.
+A hardened, privacy-first blueprint for integrating **Google Assistant / Google Home Minis** with **Home Assistant** and **Node-RED** without exposing your internal devices, cameras, alarms, or network topology to Google Cloud, and without requiring Nabu Casa or manual Google Home routines.
 
 ---
 
